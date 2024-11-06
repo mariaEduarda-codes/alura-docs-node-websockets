@@ -1,5 +1,16 @@
 import {documentosColecao} from "./dbConnect.js";
 
+function obterDocumentos() {
+    return documentosColecao.find().toArray();
+}
+
+function adicionarDocumento(nome) {
+    return documentosColecao.insertOne({
+        nome,
+        texto: ""
+    });
+}
+
 function encontrarDocumento(nome) {
     // const documento = documentosColecao.findOne({nome: nome});
     //
@@ -9,15 +20,19 @@ function encontrarDocumento(nome) {
 }
 
 function atualizaDocumento(nome, texto) {
-    const atualizacao = documentosColecao.updateOne({
+    return documentosColecao.updateOne({
         nome
     }, {
         $set: {
             texto
         }
     });
-
-    return atualizacao;
 }
 
-export {encontrarDocumento, atualizaDocumento };
+function excluirDocumento(nome) {
+    return documentosColecao.deleteOne({
+        nome
+    });
+}
+
+export {encontrarDocumento, atualizaDocumento, obterDocumentos, adicionarDocumento, excluirDocumento };
